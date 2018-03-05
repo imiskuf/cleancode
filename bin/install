@@ -5,15 +5,15 @@ printf "Installing cleancode\n";
 GIT_PATH=$(git rev-parse --show-toplevel);
 FILENAME=cleancode.yml
 CONFIG_PATH=$GIT_PATH/$FILENAME;
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 printf "Copying configuration file to $CONFIG_PATH\n";
-
-#eval $(./exportconfig $1)
+cp $DIR/../config.yml.default $CONFIG_PATH
 
 printf "Setting up git hook\n";
-
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-CONTENT=$(cat $DIR/../pre-commit);
-printf "#!/usr/bin/env bash\n$content" > $GIT_PATH/.git/hooks/pre-commit
+CONFIG_LINE="eval \$(eval $DIR/exportconfig $CONFIG_PATH);"
+CONTENT=$(cat $DIR/../pre-commit);ls
+printf "#!/usr/bin/env bash\n$CONFIG_LINE\n$CONTENT" > $GIT_PATH/.git/hooks/pre-commit
+chmod +x $GIT_PATH/.git/hooks/pre-commit
 
 printf "Installation complete\n";
