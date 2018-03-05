@@ -1,0 +1,35 @@
+#!/usr/bin/env php
+<?php
+
+if (1 === $argc) {
+    return print "\033[0;31mError:\033[0m Missing yaml file path!\n";
+}
+
+$filePath = $argv[1];
+if (!file_exists($filePath)) {
+    return printf("\033[0;31mError:\033[0m Cannot open file '%s'!\n", $filePath);
+}
+
+require_once  __DIR__ . '/../vendor/autoload.php';
+
+$parser = new Symfony\Component\Yaml\Parser();
+try {
+    $data = $parser->parseFile($filePath);
+} catch (Symfony\Component\Yaml\Exception\ParseException $e) {
+    return printf(
+        "\033[0;31mError:\033[0m Cannot parse given yaml file. Check your yaml file syntax!\n%s\n",
+        $e->getMessage()
+    );
+}
+
+foreach ($data['phpcs'] as $key => $value) {
+    if (is_array($value)) {
+        $value = implode(',', $value);
+    }
+
+    if (is_bool($value)) {
+        $value = (int) $value;
+    }
+
+    printf("PHPCS_%s='%s';\n", strtoupper($key), $value);
+}

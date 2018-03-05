@@ -1,0 +1,9 @@
+phpcs:
+  bin: /usr/bin/phpcs
+  standart: PSR2
+  file_pattern: \.(php|phtml)
+  ignore_warnings: false
+  ignored_files:
+    - first
+    - second
+
