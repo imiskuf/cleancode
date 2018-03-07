@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+eval \$(eval $DIR/exportconfig $CONFIG_PATH); todo set correct path
+
+if [ $PHPCS_ENABLE == 0 ] ; then
+    $PHPCS_BIN -> todo from config with config parameters
+fi
+
+if [ $PHPMD_ENABLE == 0 ] ; then
+    $PHPMD_BIN  -> todo from config with config parameters
+fi
+
+if [ $PHPLOC_ENABLE == 0 ] ; then
+    $PHPLOC_BIN -> todo from config with config parameters
+fi

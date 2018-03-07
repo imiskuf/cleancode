@@ -1,9 +1,21 @@
 phpcs:
+  enable: true
+  enable_hook: true
   bin: /usr/bin/phpcs
-  standart: PSR2
+  standard: PSR2
   file_pattern: \.(php|phtml)
   ignore_warnings: false
   ignored_files:
     - first
     - second
+  #todo
 
+phpmd:
+  enable: true
+  bin: /usr/bin/phpmd
+  ruleset: vendor/imiskuf/cleancode/rulesets/default.xml #todo
+
+phploc:
+  enable: true
+  bin: /usr/bin/phploc
+  #todo

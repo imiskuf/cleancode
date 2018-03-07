@@ -1,14 +1,15 @@
 
 PHPCS_BIN=/usr/bin/phpcs
-PHPCS_CODING_STANDARD=PEAR
 PHPCS_IGNORE=
 TMP_STAGING=".tmp_staging"
 
-# parse config
-CONFIG_FILE=$(dirname $0)/config
-if [ -e $CONFIG_FILE ]; then
-    . $CONFIG_FILE
+# check if hook is enabled
+if [ $PHPCS_ENABLE == 0 ] || [ $PHPCS_ENABLE_HOOK == 0 ]
+    exit 0
 fi
+
+echo "test"
+exit 0
 
 # simple check if code sniffer is set up correctly
 if [ ! -x $PHPCS_BIN ]; then
@@ -96,7 +97,7 @@ do
   STAGED_FILES="$STAGED_FILES $TMP_STAGING/$FILE"
 done
 
-OUTPUT=$($PHPCS_BIN -s $IGNORE_WARNINGS --standard=$PHPCS_CODING_STANDARD $ENCODING $IGNORE $SNIFFS $STAGED_FILES)
+OUTPUT=$($PHPCS_BIN -s $IGNORE_WARNINGS --standard=$PHPCS_STANDARD $ENCODING $IGNORE $SNIFFS $STAGED_FILES)
 RETVAL=$?
 
 # delete temporary copy of staging area
